@@ -1130,8 +1130,6 @@ View Our Projects
         </div>
     </div>
 </section>
-
-<!-- Expanded Testimonials with Like/Dislike Feedback -->
 <section id="testimonials" class="testimonial-container">
     <div style="text-align: center; margin-bottom: 30px;">
         <span style="color: #1da1f2; text-transform: uppercase; font-size: 12px; letter-spacing: 2px; font-weight: bold;">Testimonials</span>
@@ -1208,8 +1206,6 @@ View Our Projects
         </div>
     </div>
 </section>
-
-<!-- Floating Chatbot Widget -->
 <div class="chatbot-toggler" onclick="toggleChatbot()">
     <i class="fa-solid fa-comment-dots"></i>
 </div>
@@ -1348,8 +1344,6 @@ counter.innerText = target + suffix;
 };
 updateCounter();
 });
-
-// Typing Animation for Hero Section
 const phrases = [
 "We design and develop stunning, high-performance websites that convert visitors into paying customers.",
 "Specialized in PHP, MySQL, JavaScript & Custom Web Applications.",
@@ -1373,7 +1367,7 @@ charIndex++;
 let typingSpeed = isDeleting ? 30 : 60;
 
 if (!isDeleting && charIndex === currentPhrase.length) {
-typingSpeed = 2500; // Pause at end of sentence
+typingSpeed = 2500; 
 isDeleting = true;
 } else if (isDeleting && charIndex === 0) {
 isDeleting = false;
@@ -1384,7 +1378,6 @@ setTimeout(typeEffect, typingSpeed);
 }
 document.addEventListener("DOMContentLoaded", typeEffect);
 
-// Testimonial Feedback (Like/Dislike) Handler
 function handleFeedback(btn, type) {
 const row = btn.closest('.feedback-actions');
 const likeBtn = row.querySelector('.fa-thumbs-up').closest('button');
@@ -1432,7 +1425,7 @@ let answerText = "";
 
 if (type === 'pricing') {
 questionText = "How much does a website cost?";
-answerText = "Our pricing is very friendly and depends on your project scope (Landing pages, Business sites, or E-commerce platforms). Reach out via WhatsApp for a quick quote!";
+answerText = "Our pricing is very friendly and depends on your project scope (Landing pages, Business sites, or E-commerce platforms,Etc). Reach out via WhatsApp for a quick quote!";
 } else if (type === 'duration') {
 questionText = "How long does delivery take?";
 answerText = "Most standard business websites and landing pages are fully delivered and launched within 3 to 7 working days!";
@@ -1440,8 +1433,6 @@ answerText = "Most standard business websites and landing pages are fully delive
 questionText = "What are your payment terms?";
 answerText = "We typically operate with a flexible deposit to kickstart your project development, with the balance paid upon completion and final approval.";
 }
-
-// Append user message
 const userMsg = document.createElement("div");
 userMsg.className = "chat-msg user";
 userMsg.innerText = questionText;
