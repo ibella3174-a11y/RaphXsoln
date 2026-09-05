@@ -177,6 +177,20 @@ margin:auto;
 line-height:1.6;
 opacity:0.8;
 margin-bottom:30px;
+font-size: 16px;
+}
+
+.hero-dynamic-text {
+color: #00d2ff;
+font-weight: bold;
+border-right: 2px solid #00d2ff;
+padding-right: 3px;
+animation: blink 0.75s infinite;
+}
+
+@keyframes blink {
+0%, 100% { border-color: transparent; }
+50% { border-color: #00d2ff; }
 }
 
 .btn{
@@ -471,6 +485,13 @@ body.light .skill-card h4 {
     padding: 40px 20px;
     max-width: 600px;
     margin: auto;
+    position: relative;
+    overflow: hidden;
+}
+
+.project-slider-wrapper {
+    position: relative;
+    min-height: 380px;
 }
 
 .project-card {
@@ -478,8 +499,20 @@ body.light .skill-card h4 {
     border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 20px;
     overflow: hidden;
-    margin-bottom: 30px;
-    transition: 0.3s;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(30px);
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.project-card.active-proj {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
 }
 
 .project-image {
@@ -538,6 +571,113 @@ body.light .project-info h3 {
     border-color: #00d2ff;
     transform: scale(1.05);
 }
+
+/* Floating Interactive Chat Widget */
+.chat-widget-container {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    z-index: 1000;
+}
+.chat-toggle-btn {
+    width: 60px;
+    height: 60px;
+    background: #1da1f2;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 26px;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(29, 161, 242, 0.4);
+    transition: transform 0.3s ease;
+}
+.chat-toggle-btn:hover {
+    transform: scale(1.1);
+}
+.chat-box {
+    position: absolute;
+    bottom: 75px;
+    right: 0;
+    width: 320px;
+    background: #121826;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    display: none;
+    flex-direction: column;
+    animation: fadeInUp 0.3s ease forwards;
+}
+body.light .chat-box {
+    background: #fff;
+    border-color: #ddd;
+}
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.chat-header {
+    background: #1da1f2;
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+}
+.chat-body {
+    padding: 15px;
+    max-height: 250px;
+    overflow-y: auto;
+    font-size: 13px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.chat-msg {
+    padding: 10px 14px;
+    border-radius: 12px;
+    max-width: 85%;
+    line-height: 1.4;
+}
+.chat-msg.bot {
+    background: rgba(255,255,255,0.05);
+    color: white;
+    align-self: flex-start;
+}
+body.light .chat-msg.bot {
+    background: #f1f3f5;
+    color: #111;
+}
+.chat-msg.user {
+    background: #1da1f2;
+    color: white;
+    align-self: flex-end;
+}
+.chat-options {
+    padding: 10px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.chat-opt-btn {
+    background: rgba(29, 161, 242, 0.1);
+    border: 1px solid rgba(29, 161, 242, 0.3);
+    color: #00d2ff;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    cursor: pointer;
+    text-align: left;
+    transition: 0.2s;
+}
+.chat-opt-btn:hover {
+    background: rgba(29, 161, 242, 0.2);
+}
+
 .testimonial-container {
     padding: 60px 20px;
     max-width: 600px;
@@ -784,7 +924,7 @@ Build a Website That <span class="highlight">Grows Your Business</span>
 </h1>
 
 <p>
-We design and develop stunning, high-performance websites that convert visitors into paying customers.
+We design and develop stunning, high-performance websites that <span class="hero-dynamic-text" id="dynamicText">convert visitors into paying customers.</span>
 </p>
 
 <a href="#contact" class="btn primary">
@@ -1014,62 +1154,65 @@ View Our Projects
         <p style="opacity: 0.7; margin-top: 10px;">See what we've built for businesses like yours.</p>
     </div>
 
-    <div class="project-card">
-        <div class="project-image">
-            <a href="#" class="category-link">
-                <div class="project-category"><i class="fa-solid fa-cart-shopping"></i> E-commerce</div>
-            </a>
+    <div class="project-slider-wrapper">
+        <div class="project-card active-proj">
+            <div class="project-image">
+                <a href="#" class="category-link">
+                    <div class="project-category"><i class="fa-solid fa-cart-shopping"></i> E-commerce</div>
+                </a>
+            </div>
+            <div class="project-info">
+                <h3>NaijaFresh Foods</h3>
+                <p>A modern online store for a premium food delivery brand in Lagos.</p>
+            </div>
         </div>
-        <div class="project-info">
-            <h3>NaijaFresh Foods</h3>
-            <p>A modern online store for a premium food delivery brand in Lagos.</p>
-        </div>
-    </div>
 
-    <div class="project-card">
-        <div class="project-image">
-            <a href="#" class="category-link">
-                <div class="project-category"><i class="fa-solid fa-graduation-cap"></i> EdTech</div>
-            </a>
+        <div class="project-card">
+            <div class="project-image">
+                <a href="#" class="category-link">
+                    <div class="project-category"><i class="fa-solid fa-graduation-cap"></i> EdTech</div>
+                </a>
+            </div>
+            <div class="project-info">
+                <h3>LightEdge Academy</h3>
+                <p>A robust learning management system with student dashboards and course tracking.</p>
+            </div>
         </div>
-        <div class="project-info">
-            <h3>LightEdge Academy</h3>
-            <p>A robust learning management system with student dashboards and course tracking.</p>
-        </div>
-    </div>
 
-    <div class="project-card">
-        <div class="project-image">
-            <a href="#" class="category-link">
-                <div class="project-category"><i class="fa-solid fa-house-chimney"></i> Real Estate</div>
-            </a>
+        <div class="project-card">
+            <div class="project-image">
+                <a href="#" class="category-link">
+                    <div class="project-category"><i class="fa-solid fa-house-chimney"></i> Real Estate</div>
+                </a>
+            </div>
+            <div class="project-info">
+                <h3>PrimeBuild Properties</h3>
+                <p>A high-end property listing platform featuring virtual tours and lead capture forms.</p>
+            </div>
         </div>
-        <div class="project-info">
-            <h3>PrimeBuild Properties</h3>
-            <p>A high-end property listing platform featuring virtual tours and lead capture forms.</p>
-        </div>
-    </div>
 
-    <div class="project-card">
-        <div class="project-image">
-            <a href="#" class="category-link">
-                <div class="project-category"><i class="fa-solid fa-calendar-check"></i> Service Business</div>
-            </a>
+        <div class="project-card">
+            <div class="project-image">
+                <a href="#" class="category-link">
+                    <div class="project-category"><i class="fa-solid fa-calendar-check"></i> Service Business</div>
+                </a>
+            </div>
+            <div class="project-info">
+                <h3>PerfectVision Beauty Saloon</h3>
+                <p>An elegant booking and appointment system designed for a luxury beauty brand.</p>
+            </div>
         </div>
-        <div class="project-info">
-            <h3>PerfectVision Beauty Saloon</h3>
-            <p>An elegant booking and appointment system designed for a luxury beauty brand.</p>
-        </div>
-    </div>
-    <div class="project-card">
-        <div class="project-image">
-            <a href="https://official-laugh-pills.vercel.app/" class="category-link">
-                <div class="project-category"><i class="fa-solid fa-calendar-check"></i>Entertainment & Humor</div>
-            </a>
-        </div>
-        <div class="project-info">
-            <h3>Laugh Pills</h3>
-            <p>A fun, lighthearted web app designed to deliver daily doses of humor, memes, and entertainment.</p>
+
+        <div class="project-card">
+            <div class="project-image">
+                <a href="https://official-laugh-pills.vercel.app/" class="category-link">
+                    <div class="project-category"><i class="fa-solid fa-face-laugh"></i> Entertainment & Humor</div>
+                </a>
+            </div>
+            <div class="project-info">
+                <h3>Laugh Pills</h3>
+                <p>A fun, lighthearted web app designed to deliver daily doses of humor, memes, and entertainment.</p>
+            </div>
         </div>
     </div>
 </section>
@@ -1117,6 +1260,28 @@ View Our Projects
 </div>
     </div>
 </section>
+
+<!-- Floating Chat FAQ Widget -->
+<div class="chat-widget-container">
+    <div class="chat-toggle-btn" onclick="toggleChat()">
+        <i class="fa-solid fa-comment-dots" id="chatIcon"></i>
+    </div>
+    <div class="chat-box" id="chatBox">
+        <div class="chat-header">
+            <span>RaphXSoln Support</span>
+            <i class="fa-solid fa-xmark" style="cursor:pointer;" onclick="toggleChat()"></i>
+        </div>
+        <div class="chat-body" id="chatBody">
+            <div class="chat-msg bot">Hi there! 👋 Welcome to RaphXSoln. How can we help you scale your business online today? Tap an option below:</div>
+        </div>
+        <div class="chat-options">
+            <button class="chat-opt-btn" onclick="askFAQ('pricing')">💰 How much does a website cost?</button>
+            <button class="chat-opt-btn" onclick="askFAQ('duration')">⏱️ How long does delivery take?</button>
+            <button class="chat-opt-btn" onclick="askFAQ('contact')">📞 How can I reach Raph directly?</button>
+        </div>
+    </div>
+</div>
+
 <section id="contact" class="contact-container">
     <div style="text-align: center;">
         <span style="color: #1da1f2; text-transform: uppercase; font-size: 12px; letter-spacing: 2px; font-weight: bold;">Contact Us</span>
@@ -1158,7 +1323,7 @@ View Our Projects
                 <div class="logo-circle">R</div>
                 RaphXSoln
             </div>
-            <p>Web Design & Development Agency specializes in creating modern,responsive, and high-performing websites for businesses and individuals.</p>
+            <p>Web Design & Development Agency specializes in creating modern, responsive, and high-performing websites for businesses and individuals.</p>
         </div>
 
         <div class="footer-column">
@@ -1271,6 +1436,44 @@ counter.innerText = target + suffix;
 updateCounter();
 
 });
+
+// Dynamic Hero Text Rotator
+const dynamicTexts = [
+    "convert visitors into paying customers.",
+    "drive real traffic & high sales.",
+    "scale your brand to new heights.",
+    "establish unmatched authority online."
+];
+let textIndex = 0;
+let charIndex = 0;
+let isDeleting = false;
+const dynamicEl = document.getElementById("dynamicText");
+
+function typeWriter() {
+    let currentText = dynamicTexts[textIndex];
+    if (isDeleting) {
+        dynamicEl.innerText = currentText.substring(0, charIndex - 1);
+        charIndex--;
+    } else {
+        dynamicEl.innerText = currentText.substring(0, charIndex + 1);
+        charIndex++;
+    }
+
+    let speed = isDeleting ? 40 : 80;
+
+    if (!isDeleting && charIndex === currentText.length) {
+        speed = 2000; // Pause at full text
+        isDeleting = true;
+    } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        textIndex = (textIndex + 1) % dynamicTexts.length;
+        speed = 500;
+    }
+    setTimeout(typeWriter, speed);
+}
+setTimeout(typeWriter, 1000);
+
+// Testimonial Carousel
 let currentSlide = 0;
 const slides = document.querySelectorAll('.testimonial-card');
 
@@ -1280,6 +1483,53 @@ function showNextSlide() {
     slides[currentSlide].classList.add('active');
 }
 setInterval(showNextSlide, 4000);
+
+// Featured Projects Auto-rotation (Replacing up & down stylishly)
+let currentProj = 0;
+const projCards = document.querySelectorAll('.project-card');
+
+function rotateProjects() {
+    projCards[currentProj].classList.remove('active-proj');
+    currentProj = (currentProj + 1) % projCards.length;
+    projCards[currentProj].classList.add('active-proj');
+}
+setInterval(rotateProjects, 3500);
+
+// Floating Chat FAQ Widget Logic
+function toggleChat() {
+    const box = document.getElementById('chatBox');
+    box.style.display = box.style.display === 'flex' ? 'none' : 'flex';
+}
+
+function askFAQ(type) {
+    const body = document.getElementById('chatBody');
+    
+    let userQ = "";
+    let botA = "";
+
+    if(type === 'pricing') {
+        userQ = "How much does a website cost?";
+        botA = "Our websites are budget-friendly and custom-tailored to Nigerian businesses without breaking the bank. Reach out via WhatsApp to grab a custom quote!";
+    } else if(type === 'duration') {
+        userQ = "How long does delivery take?";
+        botA = "Most standard business websites and landing pages are fully designed, optimized, and delivered within 3 to 7 business days!";
+    } else if(type === 'contact') {
+        userQ = "How can I reach Raph directly?";
+        botA = "You can chat with Raph instantly on WhatsApp at 07032154531 or call 09064107558.";
+    }
+
+    // Append User Message
+    body.innerHTML += `<div class="chat-msg user">${userQ}</div>`;
+    
+    // Auto scroll down
+    body.scrollTop = body.scrollHeight;
+
+    // Simulate Bot Response delay
+    setTimeout(() => {
+        body.innerHTML += `<div class="chat-msg bot">${botA}</div>`;
+        body.scrollTop = body.scrollHeight;
+    }, 600);
+}
 </script>
 </body>
 </html>
